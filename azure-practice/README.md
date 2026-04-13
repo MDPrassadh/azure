@@ -1,12 +1,10 @@
 ===============Terraform Workflow=============  
-terraform init
-terraform fmt
-terraform validate
-terraform plan
-terraform apply  # terraform apply --auto-approve
+terraform init -> terraform fmt-> terraform validate->terraform plan->terraform apply # terraform apply --auto-approve
+
 terraform destroy  # terraform destroy --auto-approve  
 
 ========= Terraform Resource Creation Syntax==========
+
 resource "type-of resource" "name-of-resource" {
     arg1 = ?
     arg2 = ?
