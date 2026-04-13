@@ -6,6 +6,7 @@ terraform destroy  # terraform destroy --auto-approve
 ========= Terraform Resource Creation Syntax==========
 
 resource "type-of resource" "name-of-resource" {
+
     arg1 = ?
     arg2 = ?
     arg3 = ?
