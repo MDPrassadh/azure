@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "hub_rg" {
 resource "azurerm_virtual_network" "vNET" {
   name                = "${var.hub_rg_name}-vNET"
   location            = var.location
-  resource_group_name = azurerm_resource_group.hub_rg.name# implicit dependency on 
+  resource_group_name = azurerm_resource_group.hub_rg.name # implicit dependency on 
   #resource group creation which is named in rg.tf file as "HUB_RG"
   address_space = var.vNET_cidr_block
 }

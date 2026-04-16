@@ -85,3 +85,131 @@ Move "azurerm_resource_group.SP2_RG" to "azurerm_resource_group.SP2_RG1"
 Successfully moved 1 object(s).
 Releasing state lock. This may take a few moments...
 
+Terraform Variables Declaration and tfvars.............
+
+===========================================================
+
+class --2
+
+1 Access existing keyValuts uisng Data sources.
+2 Deploy NSG and Virtual Machines.
+3 Understand LIfe Cycle policies.... 
+4 Terraform Functions...
+   -count
+   -Lenght
+   -map
+   -lookup
+   -condition
+
+
+
+
+
+
+azure-practice/
+ ├── 1.provider.tf
+ ├── 2.variables.tf        # schema only (no defaults)
+ ├── 3.terraform.tfvars    # optional, for local dev
+ ├── dev.tfvars            # dev environment values
+ ├── test.tfvars           # test environment values
+ ├── prod.tfvars           # prod environment values
+ ├── 4.nsg.tf
+ ├── 5.main.tf
+ ├── 6.random_passwords.tf
+ └── .gitignore
+
+ azure-practice/
+ ├── 1.provider.tf
+ ├── 2.variables.tf        # schema only
+ ├── dev.tfvars
+ ├── test.tfvars
+ ├── prod.tfvars
+ ├── 3.terraform.tfvars    # optional local default
+ ├── 4.nsg.tf
+ ├── 5.main.tf
+ ├── 6.random_passwords.tf
+ └── .gitignore
+
+
+test.tfvars
+
+hub_rg_name             = "AZB50-HUB-RG-TEST"
+location                = "East US"
+owner                   = "QA Team"
+environment             = "Testing"
+managed_by              = "Terraform"
+vNET_cidr_block         = ["10.20.0.0/16"]
+vNET_subnet1_cidr_block = ["10.20.1.0/24"]
+vNET_subnet2_cidr_block = ["10.20.2.0/24"]
+vNET_subnet3_cidr_block = ["10.20.3.0/24"]
+
+terraform plan -var-file="test.tfvars"
+terraform apply -var-file="test.tfvars"
+
+
+dev.tfvars
+
+hub_rg_name             = "AZB50-HUB-RG-DEV"
+location                = "East US"
+owner                   = "DevOps Team"
+environment             = "Development"
+managed_by              = "Terraform"
+vNET_cidr_block         = ["10.1.0.0/16"]
+vNET_subnet1_cidr_block = ["10.1.1.0/24"]
+vNET_subnet2_cidr_block = ["10.1.2.0/24"]
+vNET_subnet3_cidr_block = ["10.1.3.0/24"]
+
+terraform plan -var-file="dev.tfvars"
+terraform apply -var-file="dev.tfvars"
+
+prod.tfvars
+
+hub_rg_name             = "AZB50-HUB-RG-PROD"
+location                = "East US"
+owner                   = "CloudOps Team"
+environment             = "Production"
+managed_by              = "Terraform"
+vNET_cidr_block         = ["10.50.0.0/16"]
+vNET_subnet1_cidr_block = ["10.50.1.0/24"]
+vNET_subnet2_cidr_block = ["10.50.2.0/24"]
+vNET_subnet3_cidr_block = ["10.50.3.0/24"]
+
+
+
+terraform plan -var-file="prod.tfvars"
+terraform apply -var-file="prod.tfvars"
+
+
+# How Terraform Picks Up .tfvars
+By default, Terraform automatically loads a file named terraform.tfvars or *.auto.tfvars in the working directory.
+
+Since you named yours 3.terraform.tfvars, you need to explicitly tell Terraform to use it:
+
+bash
+terraform plan -var-file="3.terraform.tfvars"
+terraform apply -var-file="3.terraform.tfvars"
+If you rename it to terraform.tfvars, you won’t need the -var-file flag — Terraform will pick it up automatically.
+
+🧠 Best Practice
+Keep variables.tf as a schema only (no defaults).
+
+Use separate .tfvars files for environments:
+
+dev.tfvars
+
+test.tfvars
+
+prod.tfvars
+
+Run with:
+
+bash
+terraform plan -var-file="prod.tfvars"
+Add .tfvars and state files to .gitignore so they never get pushed to GitHub:
+
+Code
+*.tfvars
+*.tfstate
+*.tfstate.backup
+crash.log
+👉 Since you already have 3.terraform.tfvars, you can either keep using -var-file or rename it to terraform.tfvars for automatic loading.
